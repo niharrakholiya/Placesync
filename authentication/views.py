@@ -21,8 +21,6 @@ def student_login(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            print(username)
-            print(password)
             print(make_password(password))
             user = authenticate(request, username="aabbaa", password="pbkdf2_sha256$720000$B569yMy5ZzH20BKLFLWEgQ$m4eNHOWPNDdqoPmjO/k7sz31tlhbG/ihTP1ix7OEH2Y=")
             print("User:", user)
