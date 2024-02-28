@@ -9,6 +9,7 @@ from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLogi
 from .forms import StudentLoginForm
 from django.contrib.auth.hashers import make_password
 
+
 # Create your views here.
 
 def home_page(request):
@@ -16,6 +17,7 @@ def home_page(request):
 
 
 from django.contrib.auth.hashers import check_password
+
 
 def student_login(request):
     if request.method == 'POST':
@@ -69,7 +71,6 @@ def register_student(request):
     if request.method == 'POST':
         form = StudentRegistrationForm(request.POST)
         if form.is_valid():
-
             user = form.save(commit=False)  # Get the unsaved user object
             password = form.cleaned_data['password']  # Get the raw password from the form
             hashed_password = make_password(password)  # Hash the password
@@ -78,13 +79,13 @@ def register_student(request):
             return redirect('student-login')
     else:
         form = StudentRegistrationForm()
-    return render(request, 'student-register.html',{'form':form})
+    return render(request, 'student-register.html', {'form': form})
+
 
 def register_company(request):
     if request.method == 'POST':
         form = CompanyRegistrationForm(request.POST)
         if form.is_valid():
-
             user = form.save(commit=False)  # Get the unsaved user object
             password = form.cleaned_data['password']  # Get the raw password from the form
             hashed_password = make_password(password)  # Hash the password
@@ -94,3 +95,6 @@ def register_company(request):
     else:
         form = CompanyRegistrationForm()
     return render(request, 'company-register.html',{'form':form})
+
+
+

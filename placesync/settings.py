@@ -26,10 +26,13 @@ SECRET_KEY = 'django-insecure-srgv+$0@-8u1!0$#2ft5a5y+4f02u&b$^=+4bu+ke*$yd$d+ik
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# settings.py
+
 
 # Specify your custom user model
-AUTH_USER_MODEL = 'authentication.Student'
+AUTHENTICATION_BACKENDS = [
+    'authentication.backends.StudentBackend',
+    'authentication.backends.CompanyBackend',
+]
 
 
 # Application definition
