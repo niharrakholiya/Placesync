@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         if not email:
@@ -22,6 +23,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(username, email, password, **extra_fields)
 
+
 class Student(AbstractBaseUser):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(max_length=255, unique=True)
@@ -37,11 +39,16 @@ class Student(AbstractBaseUser):
         return self.username
 
 
-class Company(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)  # Note: You should encrypt passwords in production
+class Company(AbstractBaseUser):
+    username = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(max_length=255, unique=True, default='')
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
-    # You can add more fields as needed, such as company name, email, etc.
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
+
+    objects = CustomUserManager()
 
     def __str__(self):
         return self.username
