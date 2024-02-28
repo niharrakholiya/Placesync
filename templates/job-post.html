@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Job Post - Placement Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+<div class="flex flex-col h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow">
+        <div class="container mx-auto flex items-center justify-between py-4">
+            <a href="#" class="text-xl font-bold text-indigo-600 flex items-center">
+                <span class="ml-0">Placement System</span>
+            </a>
+            <nav class="space-x-4">
+                <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Dashboard</a>
+                <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Profile</a>
+                <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Settings</a>
+                <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow bg-gray-100 p-6">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold mb-6">Add Job Post</h1>
+
+            <!-- Job Post Form -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-xl font-bold mb-4">Job Post Details</h2>
+                <form action="#" method="post">
+                    <!-- CSRF token -->
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label for="total_posts" class="block text-gray-600 text-sm font-medium mb-2">Total Posts</label>
+                        <input type="number" id="total_posts" name="total_posts" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="positions" class="block text-gray-600 text-sm font-medium mb-2">Positions</label>
+                        <input type="number" id="positions" name="positions" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="salary" class="block text-gray-600 text-sm font-medium mb-2">Salary</label>
+                        <input type="number" id="salary" name="salary" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+                    </div>
+
+                    <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">Add Job Post</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-2">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Placement Management System. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>

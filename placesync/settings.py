@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+from django.conf import settings
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +28,6 @@ SECRET_KEY = 'django-insecure-srgv+$0@-8u1!0$#2ft5a5y+4f02u&b$^=+4bu+ke*$yd$d+ik
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Specify your custom user model
 AUTHENTICATION_BACKENDS = [
@@ -55,8 +56,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
 ]
+
+
 
 ROOT_URLCONF = 'placesync.urls'
 

@@ -41,7 +41,9 @@ class Student(AbstractBaseUser):
 
 class Company(AbstractBaseUser):
     username = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(max_length=255, unique=True, default='')
+    email = models.EmailField(max_length=255, unique=True)
+    company_name = models.CharField(max_length=255, default='')  # Add company name field
+    company_location = models.CharField(max_length=255, default='')  # Add company location field
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

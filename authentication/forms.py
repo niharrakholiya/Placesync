@@ -22,7 +22,7 @@ class StudentLoginForm(forms.Form):
 class CompanyRegistrationForm(forms.ModelForm):
     class Meta:
         model = Company
-        fields = ['username', 'email', 'password']
+        fields = ['username', 'email', 'password', 'company_name', 'company_location']  # Include 'company_name' field
         widgets = {
             'password': forms.PasswordInput(),
         }
