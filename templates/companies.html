@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registered Companies</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-4">Registered Companies</h1>
+
+    <!-- Loop through each company and create a card -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Example card for each company -->
+        {% for company in registered_companies %}
+        <div class="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+            <!-- Company Image -->
+            {% if company.company_image %}
+            <img class="w-full" src={{ company.company_image.url }} alt="{{ company.company_name }}">
+            {% endif %}
+            <div class="px-6 py-4">
+                <!-- Company Name -->
+                <div class="font-bold text-xl mb-2">{{ company.company_name }}</div>
+                <!-- Company Location -->
+                <p class="text-gray-700 text-base">
+                    Location: {{ company.company_location }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
