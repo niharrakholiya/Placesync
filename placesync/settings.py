@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'placesync.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'placesync1',  # Specify the MySQL database name directly
+        'NAME': 'placesync1',  # Spegcify the MySQL database name directly
         'USER': 'root',  # Specify the MySQL username directly
-        'PASSWORD': 'nihar',  # Specify the MySQL password directly
+        'PASSWORD': '123456789',  # Specify the MySQL password directly
         'HOST': 'localhost',
         'PORT': '3306',
     }

@@ -12,7 +12,8 @@ urlpatterns = [
     path("student-register/", views.register_student, name="student-register"),
     path("company-register/", views.register_company, name="company-register"),
     path("company-dashboard/", views.company_dashboard, name="company-dashboard"),
-    path("companies/", views.companies, name="companies")
+    path("companies/", views.companies, name="companies"),
+    path('logout/', views.company_logout, name='company_logout')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
