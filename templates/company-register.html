@@ -23,42 +23,63 @@
     </div>
 </header>
 <div class="flex-grow flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div class="bg- p-4 rounded-lg shadow-md w-full max-w-md  m-3" style="background-color: #BAD4AA;">
         <h2 class="text-3xl font-bold mb-6 text-center">Company Registration</h2>
 
-        <form method="post">
+        <form method="post"  enctype="multipart/form-data">
              {% csrf_token %}
-            
-              <div class="mb-4">
-                <label for="company_name" class="block text-gray-600 text-sm font-medium mb-2">Company Name</label>
-                <input type="text" id="company_name" name="company_name" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
-            </div>
-            
-            <div class="mb-4">
-                <label for="username" class="block text-gray-600 text-sm font-medium mb-2">Username</label>
-                <input type="text" id="username" name="username" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+               <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text">
             </div>
 
             <div class="mb-4">
-                <label for="email" class="block text-gray-600 text-sm font-medium mb-2">Email</label>
-                <input type="email" id="email" name="email" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password">
             </div>
             
-              <div class="mb-4">
-                <label for="company_location" class="block text-gray-600 text-sm font-medium mb-2">Company Location</label>
-                <input type="text" id="company_location" name="company_location" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+            <!-- Other company registration fields -->
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="company_name">Company Name:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_name" name="company_name" type="text">
             </div>
+            
+            <!-- Include other fields similarly -->
 
-            <div class="mb-6">
-                <label for="password" class="block text-gray-600 text-sm font-medium mb-2">Password</label>
-                <input type="password" id="password" name="password" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+         <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email:</label>
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email">
+</div>
+
+             <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="company_location">Company Location:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_location" name="company_location" type="text">
             </div>
-
-            <button type="submit" class="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">Register</button>
-        </form>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="company_link">Company Link:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_link" name="company_link" type="url">
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="about">About:</label>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="about" name="about"></textarea>
+            </div>
+            
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="company_image">Company Image:</label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_image" name="company_image" type="file">
+            </div>
+               <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    Register
+                </button>
+            </div>
+         </form>
 
         <p class="mt-4 text-sm text-gray-600 text-center">Already have an account? <a href="{% url 'company-login' %}" class="text-indigo-500 hover:underline">Login</a></p>
-    </div>
+        </div>
 
 </div>
 <footer class="bg-gray-800 text-white py-2">

@@ -30,13 +30,15 @@
             <h1 class="text-3xl font-bold mb-6">Company Dashboard</h1>
 
             <!-- Company Info -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 class="text-xl font-bold mb-4">Company Information</h2>
-                <p><strong>Company Name:</strong> {{ Company.company_name }}</p>
-                <p><strong>Email:</strong> {{ Company.email }}</p>
-                <p><strong>Location:</strong> {{ Company.company_location }}</p>
-                <!-- Add more company information as needed -->
-            </div>
+
+  <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+    <h2 class="text-xl font-bold mb-4">Company Information</h2>
+    <p><strong>Company Name:</strong> {{ company.company_name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Location:</strong> {{ company.company_location }}</p>
+
+    <!-- Add more company information as needed -->
+  </div>
 
             <!-- Recent Job Openings -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, AbstractUser
 from django.db import models
 
 
@@ -24,12 +24,12 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(username, email, password, **extra_fields)
 
 
-class Student(AbstractBaseUser):
+class BasicUser(AbstractBaseUser):
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
+    role = models.CharField(max_length=20, choices=[('student', 'Student'), ('company', 'Company')], default='student')
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
@@ -39,18 +39,26 @@ class Student(AbstractBaseUser):
         return self.username
 
 
-class Company(AbstractBaseUser):
-    username = models.CharField(max_length=100, unique=True)
-    email = models.EmailField(max_length=255, unique=True)
+class Student(models.Model):
+    user = models.OneToOneField(BasicUser, on_delete=models.CASCADE, related_name='student_profile',default='')
+    # Add student-specific fields here
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
+
+def get_default_company_user():
+    try:
+        user = User.objects.get(username='company')
+    except User.DoesNotExist:
+        user = User.objects.create(username='company', email='company@example.com', is_staff=True)
+    return user
+
+
+class Company(models.Model):
+    user = models.OneToOneField(BasicUser, on_delete=models.CASCADE, related_name='company_profile',default=get_default_company_user)
     company_name = models.CharField(max_length=255, default='')  # Add company name field
     company_location = models.CharField(max_length=255, default='')  # Add company location field
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-    objects = CustomUserManager()
-
-    def __str__(self):
-        return self.username
+    company_image = models.ImageField(upload_to='company_images/', null=True, blank=True)  # Add image field
+    company_link = models.URLField(blank=True)  # Add company link field
+    about = models.TextField(blank=True)  # Add about field

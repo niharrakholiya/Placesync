@@ -5,19 +5,19 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
-
-from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLoginForm
+from django.contrib.auth.hashers import check_password
+from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLoginForm, UserRegistrationForm
 from .forms import StudentLoginForm
 from django.contrib.auth.hashers import make_password
+from .models import Company
+from django.shortcuts import render
 
 
 # Create your views here.
 
+
 def home_page(request):
     return render(request, "index.html")
-
-
-from django.contrib.auth.hashers import check_password
 
 
 def student_login(request):
@@ -52,11 +52,11 @@ def company_login(request):
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
             print("User:", user)
-            if user is not None and user.is_active:
-                    login(request, user)
-                    messages.success(request, 'Login successful.')
-                    print("It will be redirected")
-                    return redirect('company-dashboard')
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login successful.')
+                print("It will be redirected")
+                return redirect('company-dashboard')
 
             else:
                 messages.error(request, 'Invalid username or password.')
@@ -70,40 +70,88 @@ def company_login(request):
 def register_student(request):
     if request.method == 'POST':
         form = StudentRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)  # Get the unsaved user object
-            password = form.cleaned_data['password']  # Get the raw password from the form
-            hashed_password = make_password(password)  # Hash the password
-            user.password = hashed_password
-            user.save()  # Save the user object with the hashed password
+        user_form = UserRegistrationForm(request.POST)
+        if form.is_valid() and user_form.is_valid():
+            # Save student data
+            student = form.save(commit=False)
+            student.role = 'student'
+            password = form.cleaned_data['password']
+            hashed_password = make_password(password)
+            student.password = hashed_password
+            student.save()
+
+            # Save user data
+            user = user_form.save(commit=False)
+            user.role = 'student'
+            user.set_password(password)
+            user.save()
+
             return redirect('student-login')
     else:
         form = StudentRegistrationForm()
-    return render(request, 'student-register.html', {'form': form})
+        user_form = UserRegistrationForm()
+    return render(request, 'student-register.html', {'form': form, 'user_form': user_form})
 
+
+from .models import BasicUser
 
 def register_company(request):
     if request.method == 'POST':
-        form = CompanyRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            password = form.cleaned_data['password']
-            hashed_password = make_password(password)
-            user.password = hashed_password
-            # Additional fields from the form
-            user.email = form.cleaned_data['email']
-            user.company_name = form.cleaned_data['company_name']
-            user.company_location = form.cleaned_data['company_location']
-            user.save()
-            return redirect('company-login')
+        # Retrieve form data
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        company_name = request.POST.get('company_name')
+        company_location = request.POST.get('company_location')
+        company_link = request.POST.get('company_link')
+        about = request.POST.get('about')
+        company_image = request.FILES.get('company_image')
+
+        # Create BasicUser object using CustomUserManager and save to database
+        basic_user = BasicUser.objects.create_user(username=username, email=email, password=password)
+
+        # Create Company object and associate it with the newly created BasicUser
+        company = Company(
+            user=basic_user,
+            company_name=company_name,
+            company_location=company_location,
+            company_link=company_link,
+            about=about,
+            company_image=company_image
+        )
+        company.save()
+
+        return redirect('company-login')
     else:
-        form = CompanyRegistrationForm()
-    return render(request, 'company-register.html', {'form': form})
+        return render(request, 'company-register.html')
+
+
 
 
 @login_required(login_url='company-login')
 def company_dashboard(request):
-    company = request.user  # Assuming the logged-in user is a Company instance
-    print(company)
-    return render(request, 'company-dashboard.html')
-    pass
+    user = request.user
+    context = {}
+    print(user)
+    if hasattr(user, 'company_profile'):
+        company = user.company_profile
+        print(user.company_profile)
+        print(company)  # Debug: Print company object
+
+        context = {
+            'company': company,  # Pass the company object directly
+        }
+    return render(request, 'company-dashboard.html', context)
+
+
+def companies(request):
+    # Query all registered companies from the database
+    registered_companies = Company.objects.all()
+
+    # Pass the registered companies to the template context
+    context = {
+        'registered_companies': registered_companies
+    }
+
+    # Render the HTML template with the provided context
+    return render(request, 'companies.html', context)

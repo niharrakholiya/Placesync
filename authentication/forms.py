@@ -1,17 +1,20 @@
 # forms.py
 
 from django import forms
-from .models import Student
-from .models import Company
+from .models import Student, Company, BasicUser
 
 
-class StudentRegistrationForm(forms.ModelForm):
+class UserRegistrationForm(forms.ModelForm):
     class Meta:
-        model = Student
-        fields = ['username', 'email', 'password']
+        model = BasicUser
+        exclude = ['role','is_active', 'is_staff','last_login']
         widgets = {
             'password': forms.PasswordInput(),
         }
+class StudentRegistrationForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['user']
 
 
 class StudentLoginForm(forms.Form):
@@ -22,10 +25,9 @@ class StudentLoginForm(forms.Form):
 class CompanyRegistrationForm(forms.ModelForm):
     class Meta:
         model = Company
-        fields = ['username', 'email', 'password', 'company_name', 'company_location']  # Include 'company_name' field
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
+        exclude = ['user']
+        fields = ['company_name', 'company_location', 'company_image', 'company_link' , 'about']  # Include 'company_name' field
+
 
 
 class CompanyLoginForm(forms.Form):
