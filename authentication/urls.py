@@ -1,6 +1,6 @@
 from django.conf.urls.static import static
 from django.urls import path
-from django.contrib.auth import views as auth_views
+
 from placesync import settings
 from . import views
 from .views import *
@@ -13,7 +13,7 @@ urlpatterns = [
     path("company-register/", views.register_company, name="company-register"),
     path("company-dashboard/", views.company_dashboard, name="company-dashboard"),
     path("companies/", views.companies, name="companies"),
-    path('logout', views.logout_user, name='logout'),
+    path('logout/', views.company_logout, name='company_logout')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,7 +11,8 @@ from .forms import StudentLoginForm
 from django.contrib.auth.hashers import make_password
 from .models import Company
 from django.shortcuts import render
-
+from django.contrib.auth import logout
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -66,6 +67,9 @@ def company_login(request):
         form = CompanyLoginForm()
     return render(request, 'company-login.html', {'form': form})
 
+def company_logout(request):
+    logout(request)
+    return redirect('home-page')
 
 def register_student(request):
     if request.method == 'POST':
