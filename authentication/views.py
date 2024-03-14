@@ -55,11 +55,13 @@ def company_login(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
-            print("User:", user)
+            # print("User:", user)
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Login successful.')
                 print("It will be redirected")
+                request.session['userid'] = user.company_profile.id
+                print(user.company_profile.id)
                 return redirect('company-dashboard')
 
             else:
@@ -173,8 +175,11 @@ def logout_user(request):
 @login_required(login_url='company-login')
 def add_job_post(request):
     if request.method == 'POST':
-        company = request.user
-        print(company)
+        company = Company.objects.get(id=request.session.get('userid'))
+        # for data in company:
+        #     print(data)
+        print("company   ")
+        print(company.id)
         salary = request.POST.get('salary')
         positions = request.POST.get('positions')
         location = request.POST.get('location')
@@ -183,37 +188,39 @@ def add_job_post(request):
         print(salary, positions, location, total_posts)
 
         # Convert the salary value to a decimal
-        try:
-            salary_decimal = decimal.Decimal(salary)
-        except decimal.InvalidOperation:
-            # Handle the case where the input is not a valid decimal
-            print("Invalid salary input")
-            return
-
-        # Convert the total_posts value to an integer
-        try:
-            total_posts_int = int(total_posts)
-        except ValueError:
-            # Handle the case where the input is not a valid integer
-            print("Invalid total_posts input")
-            return
-
-        # Create the JobPost object
+        # try:
+        #     salary_decimal = decimal.Decimal(salary)
+        # except decimal.InvalidOperation:
+        #     # Handle the case where the input is not a valid decimal
+        #     print("Invalid salary input")
+        #     return
+        #
+        # # Convert the total_posts value to an integer
+        # try:
+        #     total_posts_int = int(total_posts)
+        # except ValueError:
+        #     # Handle the case where the input is not a valid integer
+        #     print("Invalid total_posts input")
+        #     return
+        #
+        # # Create the JobPost object
+        print("you are printing job posts dear")
         jobpost = JobPost(
             company=company,
-            salary=salary_decimal,
+            salary=salary,
             positions=positions,
             location=location,
-            total_posts=total_posts_int
+            total_posts=total_posts
         )
-
-        # Save the JobPost object
+        print(jobpost)
+        #
+        # # Save the JobPost object
         try:
             jobpost.save()
             print("JobPost object saved successfully")
         except Exception as e:
             print(f"Error saving JobPost object: {e}")
-            return redirect('company-dashboard')
+        return redirect('company-dashboard')
     else:
         return render(request, 'job-post.html')
 
