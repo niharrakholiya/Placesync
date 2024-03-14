@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'placesync1',  # Spegcify the MySQL database name directly
         'USER': 'root',  # Specify the MySQL username directly
-        'PASSWORD': '123456789',  # Specify the MySQL password directly
+        'PASSWORD': 'nihar',  # Specify the MySQL password directly
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -101,6 +101,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 6,  # Adjust this value as needed
+        }
     },
 ]
 

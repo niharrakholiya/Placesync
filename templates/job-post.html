@@ -4,7 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Job Post - Placement Management System</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/glide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 
 <body class="bg-gray-100">
@@ -32,8 +39,7 @@
             <!-- Job Post Form -->
             <div class="bg-white rounded-lg shadow-md p-6 mb-6">
                 <h2 class="text-xl font-bold mb-4">Job Post Details</h2>
-                <form action="#" method="post">
-                    <!-- CSRF token -->
+                <form method="post">
                     {% csrf_token %}
 
                     <div class="mb-4">
@@ -43,14 +49,18 @@
 
                     <div class="mb-4">
                         <label for="positions" class="block text-gray-600 text-sm font-medium mb-2">Positions</label>
-                        <input type="number" id="positions" name="positions" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+                        <input type="text" id="positions" name="positions" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
                     </div>
 
                     <div class="mb-6">
-                        <label for="salary" class="block text-gray-600 text-sm font-medium mb-2">Salary</label>
+                        <label for="salary" class="block text-gray-600 text-sm font-medium mb-2">Salary(In LPA)</label>
                         <input type="number" id="salary" name="salary" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
                     </div>
 
+                    <div class="mb-6">
+                        <label for="location" class="block text-gray-600 text-sm font-medium mb-2">Location</label>
+                        <input type="text" id="location" name="location" class="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:border-indigo-500">
+                    </div>
                     <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">Add Job Post</button>
                 </form>
             </div>

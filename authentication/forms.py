@@ -1,7 +1,7 @@
 # forms.py
 
 from django import forms
-from .models import Student, Company, BasicUser
+from .models import Student, Company, BasicUser, JobPost
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -29,7 +29,12 @@ class CompanyRegistrationForm(forms.ModelForm):
         fields = ['company_name', 'company_location', 'company_image', 'company_link' , 'about']  # Include 'company_name' field
 
 
-
 class CompanyLoginForm(forms.Form):
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class JobPostForm(forms.ModelForm):
+    class Meta:
+        model = JobPost
+        fields = ['total_posts', 'positions', 'salary', 'location']

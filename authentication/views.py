@@ -1,3 +1,6 @@
+import decimal
+from pprint import pprint
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.checks import messages
@@ -6,10 +9,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.hashers import check_password
-from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLoginForm, UserRegistrationForm
+from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLoginForm, UserRegistrationForm, JobPostForm
 from .forms import StudentLoginForm
 from django.contrib.auth.hashers import make_password
-from .models import Company
+from .models import Company, JobPost
 from django.shortcuts import render
 from django.contrib.auth import logout
 from django.shortcuts import redirect
@@ -140,9 +143,11 @@ def company_dashboard(request):
         company = user.company_profile
         print(user.company_profile)
         print(company)  # Debug: Print company object
-
+        recent_openings = JobPost.objects.filter(company=company)[:5]
         context = {
             'company': company,  # Pass the company object directly
+            'recent_openings': recent_openings
+
         }
     return render(request, 'company-dashboard.html', context)
 
@@ -163,3 +168,60 @@ def companies(request):
 def logout_user(request):
     logout(request)
     return redirect('home-page')
+
+
+@login_required(login_url='company-login')
+def add_job_post(request):
+    if request.method == 'POST':
+        company = request.user
+        print(company)
+        salary = request.POST.get('salary')
+        positions = request.POST.get('positions')
+        location = request.POST.get('location')
+        total_posts = request.POST.get('total_posts')
+
+        print(salary, positions, location, total_posts)
+
+        # Convert the salary value to a decimal
+        try:
+            salary_decimal = decimal.Decimal(salary)
+        except decimal.InvalidOperation:
+            # Handle the case where the input is not a valid decimal
+            print("Invalid salary input")
+            return
+
+        # Convert the total_posts value to an integer
+        try:
+            total_posts_int = int(total_posts)
+        except ValueError:
+            # Handle the case where the input is not a valid integer
+            print("Invalid total_posts input")
+            return
+
+        # Create the JobPost object
+        jobpost = JobPost(
+            company=company,
+            salary=salary_decimal,
+            positions=positions,
+            location=location,
+            total_posts=total_posts_int
+        )
+
+        # Save the JobPost object
+        try:
+            jobpost.save()
+            print("JobPost object saved successfully")
+        except Exception as e:
+            print(f"Error saving JobPost object: {e}")
+            return redirect('company-dashboard')
+    else:
+        return render(request, 'job-post.html')
+
+
+def jobs(request):
+    # Retrieve recent job openings
+    recent_openings = JobPost.objects.all()[:5]  # Retrieve the 5 most recent job openings
+    context = {
+        'recent_openings': recent_openings
+    }
+    return render(request, 'company-dashboard.html', context)
