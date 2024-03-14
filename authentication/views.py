@@ -4,6 +4,7 @@ from pprint import pprint
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.checks import messages
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -156,7 +157,8 @@ def company_dashboard(request):
 
 def companies(request):
     # Query all registered companies from the database
-    registered_companies = Company.objects.all()
+    # desired_image_url = None
+    registered_companies = Company.objects.exclude(company_name="company")
 
     # Pass the registered companies to the template context
     context = {

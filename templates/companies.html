@@ -196,26 +196,29 @@ padding: 5px;
 <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-4">Registered Companies</h1>
 
-    <section class="articles">
-                {% for company in registered_companies %}
-  <article>
-
-    <div class="article-wrapper">
-      <figure>
-        <img src="{{ company.company_image.url }}" alt="" />
-      </figure>
-      <div class="article-body">
-        <h2>{{ company.company_name }}</h2>
-        <p><b>About:</b>{{ company.about }}</p>
-          <p> </p>
-          <p><b>Location:</b> {{ company.company_location }}</p>
-<button onclick="window.open('{{ company.company_link }}', '_blank')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-5 rounded float-right">Visit us</button>
-
-      </div>
-    </div>
-  </article>
-        {% endfor %}
+<section class="articles">
+    {% for company in registered_companies %}
+        <article>
+            <div class="article-wrapper">
+                <figure>
+                    {% if company.company_image %}
+                        <img src="{{ company.company_image.url }}" alt="" />
+                        
+{#                    {% else %}#}
+{#                        <img src="{% static 'path/to/default/image.png' %}" alt="Default Image" />#}
+                    {% endif %}
+                </figure>
+                <div class="article-body">
+                    <h2>{{ company.company_name }}</h2>
+                    <p><b>About:</b>{{ company.about }}</p>
+                    <p><b>Location:</b> {{ company.company_location }}</p>
+                    <button onclick="window.open('{{ company.company_link }}', '_blank')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mb-5 rounded float-right">Visit us</button>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
 </section>
+
 </div>
 <footer class="bg-gray-800 text-white py-2">
     <div class="container mx-auto text-center">
