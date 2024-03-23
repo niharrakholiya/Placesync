@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
@@ -42,7 +44,23 @@ class BasicUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Student(models.Model):
-    user = models.OneToOneField(BasicUser, on_delete=models.CASCADE, related_name='student_profile', default='')
+    # user = models.OneToOneField(BasicUser, on_delete=models.CASCADE, related_name='student_profile', default='')
+    student_name = models.CharField(max_length=30, default="")
+
+    GENDER_CHOICES = (
+            ('Male', 'Male'),
+            ('Female', 'Female')
+        )
+
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='Male')
+    age = models.IntegerField(default=18)
+    dob = models.DateField(default=date.today)
+    email = models.EmailField(unique=True, null=True)
+    phone_number = models.CharField(max_length=10, null=True)
+    address = models.TextField(default="nothing")
+    state = models.CharField(max_length=100, null=True)
+    pincode = models.CharField(max_length=6, null=True)
+    photo = models.ImageField(upload_to='static/student_photos/', null=True)
 
 
 def get_default_company():
@@ -87,3 +105,4 @@ class JobPost(models.Model):
 
     def __str__(self):
         return f"{self.positions} at {self.location}"
+

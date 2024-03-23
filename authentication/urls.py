@@ -13,8 +13,9 @@ urlpatterns = [
     path("company-register/", views.register_company, name="company-register"),
     path("company-dashboard/", views.company_dashboard, name="company-dashboard"),
     path("companies/", views.companies, name="companies"),
-    path('logout/', views.company_logout, name='company_logout'),
+    path('logout/', views.logout_user, name='company_logout'),
     path('jobpost/', views.add_job_post, name='jobpost'),
+    path('joblist/', views.job_list, name='joblist'),
 
 ]
 if settings.DEBUG:
