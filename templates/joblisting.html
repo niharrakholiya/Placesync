@@ -48,36 +48,48 @@
     </header>
     <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-4">Job Listings</h1>
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for job in job_openings %}
-            <!-- Check if the job opening is still available -->
-            {% if  job.active %}
-            <div class="bg-white rounded-lg shadow-md">
-                <div class="p-4 flex items-center">
-                    <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
-                        <img src="{{ job.company.company_image.url }}" alt="{{ job.company.company_name }}">
-                    </div>
-                    <div>
-                        <h2 class="text-xl font-semibold text-gray-800">{{ job.title }}</h2>
-                        <p class="text-gray-600 mt-2">{{ job.company.company_name }}</p>
-                        <p class="text-gray-600 mt-2">Location:- {{ job.location }}</p>
-                        <P class="text-gray-600 mt-2">Position:- {{ job.positions }}</P>
-                        <p class="text-gray-600 mt-2">Salary:- {{ job.salary }}</p>
-                        <p class="text-gray-600 mt-2">Total {{ job.total_posts }} Jobs Left</p>
-                    </div>
-                </div>
-                <div class="flex justify-between items-center p-4">
-                    <form action="{% url 'apply_job' job_id=job.id company=job.company.company_name position=job.positions %}" method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="job_id" value="{{ job.id }}">
-                        <input type="hidden" name="company" value="{{ job.company.company_name }}">
-                        <input type="hidden" name="position" value="{{ job.positions }}">
-                        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300">Apply Now</button>
-                    </form>
-                </div>
-            </div>
-            {% endif %}
+        <!-- Display Django messages here -->
+        {% if messages %}
+        <div class="alert alert-info">
+            {% for message in messages %}
+            <p>{{ message }}</p>
             {% endfor %}
+        </div>
+        {% endif %}
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% if job_openings %}
+                {% for job in job_openings %}
+                    <!-- Check if the job opening is still available -->
+                    {% if job.active %}
+                    <div class="bg-white rounded-lg shadow-md">
+                        <div class="p-4 flex items-center">
+                            <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                                <img src="{{ job.company.company_image.url }}" alt="{{ job.company.company_name }}">
+                            </div>
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-800">{{ job.title }}</h2>
+                                <p class="text-gray-600 mt-2">{{ job.company.company_name }}</p>
+                                <p class="text-gray-600 mt-2">Location:- {{ job.location }}</p>
+                                <P class="text-gray-600 mt-2">Position:- {{ job.positions }}</P>
+                                <p class="text-gray-600 mt-2">Salary:- {{ job.salary }}</p>
+                                <p class="text-gray-600 mt-2">Total {{ job.total_posts }} Jobs Left</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center p-4">
+                            <form action="{% url 'apply_job' job_id=job.id company=job.company.company_name position=job.positions %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="job_id" value="{{ job.id }}">
+                                <input type="hidden" name="company" value="{{ job.company.company_name }}">
+                                <input type="hidden" name="position" value="{{ job.positions }}">
+                                <button type="submit" class="apply-btn bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300">Apply Now</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No job openings currently available.</p>
+            {% endif %}
         </section>
     </div>
     <footer class="bg-gray-800 text-white py-2">

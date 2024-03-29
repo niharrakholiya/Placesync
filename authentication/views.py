@@ -3,12 +3,11 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.checks import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.hashers import check_password
-from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLoginForm, UserRegistrationForm, JobPostForm
+from .forms import  CompanyLoginForm
 from .forms import StudentLoginForm
 from django.contrib.auth.hashers import make_password
 from .models import Company, JobPost, BasicUser, Student, JobApplication, ApplicationStatus
@@ -266,6 +265,8 @@ def student_dashboard(request):
 
     return render(request, 'student-dashboard.html', context)
 
+from django.contrib import messages
+
 def apply_job(request, job_id, company, position):
     if request.method == 'POST':
         # Retrieve student data from session or however it's stored
@@ -275,6 +276,7 @@ def apply_job(request, job_id, company, position):
         # Check if the student has already applied for a job posted by the same company
         existing_applications = JobApplication.objects.filter(student=student, company=company)
         if existing_applications.exists():
+            # Set error message
             messages.error(request, 'You have already applied for a job posted by this company.')
             return redirect('joblist')
 
@@ -443,7 +445,7 @@ def about(request):
 
 def stop_job_opening(request, job_post_id):
     job_post = JobPost.objects.get(id=job_post_id)
-    job_post.active = False  # Set the active field to False to stop the job opening
+    job_post.active = False
     job_post.save()
-    return redirect('company-dashboard')  # Redirect back to the company dashboard
+    return redirect('company-dashboard')
 
