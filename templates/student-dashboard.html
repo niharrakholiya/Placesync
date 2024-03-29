@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    
+    <style>
+        /* Custom CSS for adjustments */
+        .profile-details p {
+            font-size: 18px; /* Bigger font size */
+            margin-bottom: 10px; /* Add margin between lines */
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+    <header class="bg-white shadow">
+        <div class="container mx-auto flex items-center justify-between py-4">
+            <a href="#" class="text-xl font-bold text-indigo-600 flex items-center">
+                <span class="ml-0">Placement System</span>
+            </a>
+            <div class="space-x-4">
+                <a href="{% url 'student-dashboard' %}" class="text-gray-600 hover:no-underline transition duration-300">Dashboard</a>
+                <a href="{% url 'joblist' %}" class="text-gray-600 hover:no-underline transition duration-300">JobListing</a>
+                <a href="{% url 'company_logout' %}" class="text-gray-600 hover:no-underline transition duration-300">Logout</a>
+            </div>
+        </div>
+    </header>
+    <div class="flex-grow container mx-auto mt-14 ">
+        <div class="flex">
+            <div class="profile-image flex-none w-48 mr-4 mt-24">
+                <img src="{{ student.photo.url }}" alt="Student Photo" class="rounded-full border-4 border-black w-36 h-36 object-cover">
+            </div>
+            <div class="profile-details bg-gray-100 rounded p-10 flex-grow">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-1">
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Email:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.email }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Gender:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.gender }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Phone Number:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.phone_number }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Address:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.address }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Resume:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <a href="{{ student.resume.url }}" target="_blank"   class="bg-blue-500 hover:bg-blue-700 text-white target=_blank font-bold py-2 px-4 rounded ">View Resume</a>
+                            </div>
+                        </div>
+                        <!-- Repeat this structure for other fields -->
+                    </div>
+                    <div class="col-span-1">
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Age:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.age }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Date of Birth:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.dob }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">State:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.state }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">Pincode:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.pincode }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-8">
+                            <div class="w-1/3">
+                                <p class="font-bold">CPI:</p>
+                            </div>
+                            <div class="w-2/3">
+                                <input type="text" value="{{ student.cpi }}" class="w-full border border-gray-300 px-3 py-2 rounded-md" disabled>
+                            </div>
+                        </div>
+                        <!-- Repeat this structure for other fields -->
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+  <footer class="bg-gray-800 text-white py-2 h-16 fixed bottom-0 left-0 w-full z-50">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Placement Management System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

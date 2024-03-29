@@ -16,7 +16,13 @@ urlpatterns = [
     path('logout/', views.logout_user, name='company_logout'),
     path('jobpost/', views.add_job_post, name='jobpost'),
     path('joblist/', views.job_list, name='joblist'),
-
+    path('student-dashboard/', views.student_dashboard, name='student-dashboard'),
+    path('apply_job/<int:job_id>/<str:company>/<str:position>/', apply_job, name='apply_job'),
+    path('job_retrive/', views.job_retrive, name='job_retrive'),
+    path('accept_reject_application/<int:application_id>/', views.accept_reject_application,
+         name='accept_reject_application'),
+    path('view',views.accepted_students,name='view'),
+    path('download_excel/', views.download_excel, name='download_excel'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

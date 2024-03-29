@@ -44,7 +44,7 @@ class BasicUser(AbstractBaseUser, PermissionsMixin):
 
 
 class Student(models.Model):
-    # user = models.OneToOneField(BasicUser, on_delete=models.CASCADE, related_name='student_profile', default='')
+    user = models.OneToOneField(BasicUser, on_delete=models.CASCADE, related_name='student_profile', default='')
     student_name = models.CharField(max_length=30, default="")
 
     GENDER_CHOICES = (
@@ -61,6 +61,8 @@ class Student(models.Model):
     state = models.CharField(max_length=100, null=True)
     pincode = models.CharField(max_length=6, null=True)
     photo = models.ImageField(upload_to='static/student_photos/', null=True)
+    resume = models.FileField(upload_to='static/student_resumes/', null=True, blank=True)
+    cpi = models.FloatField(null=True, blank=True)
 
 
 def get_default_company():
@@ -105,4 +107,31 @@ class JobPost(models.Model):
 
     def __str__(self):
         return f"{self.positions} at {self.location}"
+
+
+class JobApplication(models.Model):
+    # Other fields
+    job_id = models.IntegerField()
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)  # Assuming Student is the name of the Student model
+    company = models.CharField(max_length=100)  # Field to store the name of the company
+    position = models.CharField(max_length=100)  # Field to store the position applied for
+
+    def __str__(self):
+        return f"{self.student.student_name} - {self.company} - {self.position}"
+
+
+class ApplicationStatus(models.Model):
+    ACCEPTED = 'AC'
+    REJECTED = 'RE'
+    STATUS_CHOICES = [
+        (ACCEPTED, 'Accepted'),
+        (REJECTED, 'Rejected'),
+    ]
+    application = models.ForeignKey(JobApplication, on_delete=models.CASCADE)
+    company_name = models.CharField(max_length=255)
+    student_name = models.CharField(max_length=255)
+    status = models.CharField(max_length=2, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return f"{self.application.student.student_name} - {self.status}"
 

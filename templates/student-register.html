@@ -359,7 +359,18 @@ uploadField.onchange = function() {
           <input type="email" class="input" name="email" placeholder="Enter your email"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" required>
         </div>
+          
+        <div class="inputfield">
+            <label>Upload Resume</label>
+            <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" required>
+        </div>
 
+        <div class="inputfield">
+            <label>CPI</label>
+            <input type="number" step="0.01" name="cpi" id="cpi" placeholder="Enter your CPI" min="0" max="10" required>
+        </div>
+          
+          
         <div class="inputfield">
           <label>Password</label>
           <input type="password" class="input" id="password" name="password" placeholder="Enter your password min 8 characters"

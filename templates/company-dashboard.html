@@ -28,8 +28,9 @@
             </a>
             <nav class="space-x-4">
                 <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Dashboard</a>
-                <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Profile</a>
+                <a href="{% url 'job_retrive' %}" class="text-gray-600 hover:no-underline transition duration-300">Profile</a>
                 <a href="{% url 'jobpost' %}" class="text-gray-600 hover:no-underline transition duration-300">Job Post</a>
+                <a href="{% url 'view' %}" class="text-gray-600 hover:no-underline transition duration-300">view</a>
                 <a href="{% url 'company_logout' %}" class="text-gray-600 hover:no-underline transition duration-300">Logout</a>
             </nav>
         </div>

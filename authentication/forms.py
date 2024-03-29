@@ -52,3 +52,5 @@ class StudentRegistrationForm(forms.Form):
     hobbies = forms.MultipleChoiceField(choices=(('Music', 'Music'), ('Movies', 'Movies'), ('Sports', 'Sports'), ('Travel', 'Travel')), required=False)
     photo = forms.ImageField(required=True)
     check = forms.BooleanField(required=True)
+    cpi = forms.FloatField(required=True)  # New field for CPI
+    resume = forms.FileField(required=True)  # New field for resume
