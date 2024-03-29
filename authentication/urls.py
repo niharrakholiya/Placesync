@@ -23,6 +23,9 @@ urlpatterns = [
          name='accept_reject_application'),
     path('view',views.accepted_students,name='view'),
     path('download_excel/', views.download_excel, name='download_excel'),
+    path('about/', views.about, name='about'),
+    path('stop-job-opening/<int:job_post_id>/', stop_job_opening, name='stop_job_opening'),
+    # Define the URL pattern for stop_job_opening
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

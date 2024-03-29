@@ -23,8 +23,8 @@
         </a>
         <div class="space-x-4">
             <a href="{% url 'home-page' %}" class="text-gray-600 hover:no-underline transition duration-300">Home</a>
-            <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Companies</a>
-            <a href="#" class="text-gray-600 hover:no-underline transition duration-300">About</a>
+            <a href="{% url 'companies' %}" class="text-gray-600 hover:no-underline transition duration-300">Companies</a>
+            <a href="{% url 'about' %}" class="text-gray-600 hover:no-underline transition duration-300">About</a>
         </div>
     </div>
 </header>
@@ -36,46 +36,46 @@
              {% csrf_token %}
                <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" required>
             </div>
 
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password"required>
             </div>
             
             <!-- Other company registration fields -->
             
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="company_name">Company Name:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_name" name="company_name" type="text">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_name" name="company_name" type="text" required>
             </div>
             
             <!-- Include other fields similarly -->
 
          <div class="mb-4">
     <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email:</label>
-    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email">
+    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="email" required>
 </div>
 
              <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="company_location">Company Location:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_location" name="company_location" type="text">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_location" name="company_location" type="text" required>
             </div>
             
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="company_link">Company Link:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_link" name="company_link" type="url">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_link" name="company_link" type="url" required>
             </div>
             
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="about">About:</label>
-                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="about" name="about"></textarea>
+                <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="about" name="about" required></textarea>
             </div>
             
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="company_image">Company Image:</label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_image" name="company_image" type="file">
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="company_image" name="company_image" type="file" required>
             </div>
                <div class="flex items-center justify-between">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">

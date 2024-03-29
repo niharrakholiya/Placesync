@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Placement Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        /* Custom CSS for styling enhancements */
+        /* Gradient background */
+
+
+        /* Card hover effect */
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen bg-gray-100">
+<!-- Navigation bar -->
+<header class="bg-white shadow">
+    <div class="container mx-auto flex items-center justify-between py-4">
+        <a href="#" class="text-xl font-bold text-indigo-600 flex items-center">
+            <span class="ml-0">Placement System</span>
+        </a>
+        <div class="space-x-4">
+            <a href="{% url 'home-page' %}" class="text-gray-600 hover:no-underline transition duration-300">Home</a>
+            <a href="{% url 'companies' %}" class="text-gray-600 hover:no-underline transition duration-300">Companies</a>
+            <a href="{% url 'about' %}" class="text-gray-600 hover:no-underline transition duration-300">About</a>
+        </div>
+    </div>
+</header>
+
+<!-- Page content -->
+<div class="container mx-auto mt-8">
+    <div class="px-4 py-8 bg-white shadow-md rounded-lg">
+        <h1 class="animate__animated animate__fadeInDown text-3xl font-bold text-gray-800 mb-8 text-center">About Us</h1>
+        <p class="animate__animated animate__fadeInDown text-lg text-gray-600 mb-8 leading-relaxed">Placement Management System is your ultimate destination for seamless job placements. Our platform connects talented students with top-notch companies, making the hiring process efficient and hassle-free.</p>
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Our Vision</h2>
+        <p class="animate__animated animate__slideInUp text-lg text-gray-600 mb-8 leading-relaxed">We envision a world where every student finds their dream job and every company discovers the perfect fit for their team. Our commitment to excellence, innovation, and integrity drives us towards this goal.</p>
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Key Features</h2>
+        <ul class="animate__animated animate__slideInUp list-disc list-inside text-lg text-gray-600 mb-8 leading-relaxed">
+            <li>User-friendly interface for easy navigation</li>
+            <li>Comprehensive job listing and search functionality</li>
+            <li>Resume uploading and profile management for students</li>
+            <li>Efficient company registration and job posting</li>
+            <li>Real-time application tracking and status updates</li>
+        </ul>
+
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Our Team</h2>
+        <div class="animate__animated animate__slideInUp grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Team member cards -->
+            <div class="bg-white rounded-lg shadow-md p-6 team-card">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">John Doe</h3>
+                <p class="text-lg text-gray-600">CEO & Founder</p>
+                <p class="text-gray-600">Passionate about revolutionizing the job placement industry, John leads our team with vision and dedication.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 team-card">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Jane Smith</h3>
+                <p class="text-lg text-gray-600">Head of Operations</p>
+                <p class="text-gray-600">With a keen eye for detail and efficiency, Jane ensures smooth operations and exceptional user experience.</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 team-card">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Michael Johnson</h3>
+                <p class="text-lg text-gray-600">Lead Developer</p>
+                <p class="text-gray-600">A coding maestro, Michael brings innovation and technical expertise to our platform's development.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-4 mt-8">
+    <div class="container mx-auto text-center">
+        <p>&copy; 2024 Placement Management System. All rights reserved.</p>
+    </div>
+</footer>
+</body>
+
+</html>

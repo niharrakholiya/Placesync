@@ -16,21 +16,32 @@
 </head>
 
 <body class="font-sans bg-gray-100 min-h-screen flex flex-col">
-<header class="bg-white shadow ">
+<header class="bg-white shadow">
     <div class="container mx-auto flex items-center justify-between py-4">
         <a href="#" class="text-xl font-bold text-indigo-600 flex items-center">
             <span class="ml-0">Placement System</span>
         </a>
         <div class="space-x-4">
             <a href="{% url 'home-page' %}" class="text-gray-600 hover:no-underline transition duration-300">Home</a>
-            <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Companies</a>
-            <a href="#" class="text-gray-600 hover:no-underline transition duration-300">About</a>
+            <a href="{% url 'companies' %}" class="text-gray-600 hover:no-underline transition duration-300">Companies</a>
+            <a href="{% url 'about' %}" class="text-gray-600 hover:no-underline transition duration-300">About</a>
         </div>
     </div>
 </header>
 <div class="flex-grow flex items-center justify-center ">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 class="text-3xl font-bold mb-6 text-center">Company Login</h2>
+<!-- Display error messages -->
+<!-- Display error messages -->
+{% if messages %}
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        {% for message in messages %}
+            <span class="block sm:inline">{{ message }}</span><br>
+        {% endfor %}
+    </div>
+{% endif %}
+
 
 <form method="post">
     {% csrf_token %}

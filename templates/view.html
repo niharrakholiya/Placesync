@@ -19,7 +19,7 @@
                 <a href="{% url 'company-dashboard' %}" class="text-gray-600 hover:no-underline transition duration-300">Dashboard</a>
                 <a href="{% url 'job_retrive' %}" class="text-gray-600 hover:no-underline transition duration-300">Profile</a>
                 <a href="{% url 'jobpost' %}" class="text-gray-600 hover:no-underline transition duration-300">Job Post</a>
-                <a href="{% url 'view' %}" class="text-gray-600 hover:no-underline transition duration-300">view</a>
+                <a href="{% url 'view' %}" class="text-gray-600 hover:no-underline transition duration-300">Accepted Students</a>
                 <a href="{% url 'company_logout' %}" class="text-gray-600 hover:no-underline transition duration-300">Logout</a>
             </nav>
         </div>
@@ -27,6 +27,8 @@
 
     <div class="container mx-auto py-8 flex-grow">
         <h1 class="text-3xl font-bold mb-4">Accepted Students</h1>
+        <!-- Check if there are accepted students -->
+        {% if accepted_students %}
         <div class="overflow-x-auto">
             <table class="table-auto w-full">
                 <thead>
@@ -47,11 +49,15 @@
                     {% endfor %}
                 </tbody>
             </table>
-       
         </div>
-     <div class="mt-4">
-    <a href="{% url 'download_excel' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Excel</a>
-</div>
+        <!-- Display the Excel button -->
+        <div class="mt-4">
+            <a href="{% url 'download_excel' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Excel</a>
+        </div>
+        {% else %}
+        <!-- Display a message when no students are accepted -->
+        <p class="text-gray-600 mt-4">No students are accepted.</p>
+        {% endif %}
     </div>
 
     <footer class="bg-gray-800 text-white py-2 mt-auto">

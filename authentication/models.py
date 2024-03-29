@@ -97,16 +97,19 @@ class Company(models.Model):
     company_link = models.URLField(blank=True)  # Add company link field
     about = models.TextField(blank=True)  # Add about field
 
+    from django.db import models
+    from django.contrib.auth.models import User
 
 class JobPost(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, default=get_default_company)
-    total_posts = models.IntegerField()
-    positions = models.CharField(max_length=100)
-    salary = models.DecimalField(max_digits=10, decimal_places=2)
-    location = models.CharField(max_length=100)
+        company = models.ForeignKey(Company, on_delete=models.CASCADE)  # Assuming Company is linked to User
+        total_posts = models.IntegerField()
+        positions = models.CharField(max_length=100)
+        salary = models.DecimalField(max_digits=10, decimal_places=2)
+        location = models.CharField(max_length=100)
+        active = models.BooleanField(default=True)  # Add a field to indicate if the job opening is active
 
-    def __str__(self):
-        return f"{self.positions} at {self.location}"
+        def __str__(self):
+            return f"{self.positions} at {self.location}"
 
 
 class JobApplication(models.Model):

@@ -37,7 +37,6 @@ def student_login(request):
                     login(request, user)
                     if hasattr(user, 'student_profile'):
                      request.session['stdid'] = user.student_profile.id
-                     messages.success(request, 'Login successful.')
                      return redirect('joblist')
                     else:
                         messages.error(request, 'Invalid username or password.')
@@ -60,15 +59,13 @@ def company_login(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
-            # print("User:", user)
             if user is not None:
                 login(request, user)
-                messages.success(request, 'Login successful.')
-                print("It will be redirected")
-                request.session['userid'] = user.company_profile.id
-                print(user.company_profile.id)
-                return redirect('company-dashboard')
-
+                if hasattr(user, 'company_profile'):
+                    request.session['userid'] = user.company_profile.id
+                    return redirect('company-dashboard')
+                else:
+                    messages.error(request, 'Invalid username or password.')
             else:
                 messages.error(request, 'Invalid username or password.')
         else:
@@ -76,7 +73,6 @@ def company_login(request):
     else:
         form = CompanyLoginForm()
     return render(request, 'company-login.html', {'form': form})
-
 
 
 def register_student(request):
@@ -440,3 +436,14 @@ def download_excel(request):
     response.write(output.read())
 
     return response
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def stop_job_opening(request, job_post_id):
+    job_post = JobPost.objects.get(id=job_post_id)
+    job_post.active = False  # Set the active field to False to stop the job opening
+    job_post.save()
+    return redirect('company-dashboard')  # Redirect back to the company dashboard
+

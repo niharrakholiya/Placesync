@@ -309,15 +309,15 @@ uploadField.onchange = function() {
     aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
-<header class="bg-white shadow ">
+<header class="bg-white shadow">
     <div class="container mx-auto flex items-center justify-between py-4">
         <a href="#" class="text-xl font-bold text-indigo-600 flex items-center">
             <span class="ml-0">Placement System</span>
         </a>
         <div class="space-x-4">
-            <a href="#" class="text-gray-600 hover:no-underline transition duration-300">Home</a>
+            <a href="{% url 'home-page' %}" class="text-gray-600 hover:no-underline transition duration-300">Home</a>
             <a href="{% url 'companies' %}" class="text-gray-600 hover:no-underline transition duration-300">Companies</a>
-            <a href="#" class="text-gray-600 hover:no-underline transition duration-300">About</a>
+            <a href="{% url 'about' %}" class="text-gray-600 hover:no-underline transition duration-300">About</a>
         </div>
     </div>
 </header>
@@ -339,8 +339,8 @@ uploadField.onchange = function() {
 
         <div class="inputfield" id="gender">
           <label for="">Gender</label>
-          <input type="radio" name="gender" id="radio" value="Male">Male
-          <input type="radio" name="gender" id="radio" value="Female">Female
+          <input type="radio" name="gender" id="radio" value="Male" required>Male
+          <input type="radio" name="gender" id="radio" value="Female" required>Female
         </div>
 
         <div class="inputfield">
@@ -374,7 +374,7 @@ uploadField.onchange = function() {
         <div class="inputfield">
           <label>Password</label>
           <input type="password" class="input" id="password" name="password" placeholder="Enter your password min 8 characters"
-            autocomplete="off">
+            autocomplete="off"required>
         </div>
 
 
@@ -388,7 +388,7 @@ uploadField.onchange = function() {
             </select>
           </div>
           <input type="tel" class="input" name="phone-number" maxlength="10" id="phone-number"
-            placeholder="Enter your phone number" pattern="[7-9]{1}[0-9]{9}" title="Please enter valid phone number">
+            placeholder="Enter your phone number" pattern="[7-9]{1}[0-9]{9}" title="Please enter valid phone number"required>
         </div>
 
         <div class="inputfield">
