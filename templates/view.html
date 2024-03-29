@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accepted Students</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.4.1/dist/css/glide.theme.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body class="flex flex-col min-h-screen bg-gray-100">
+<header class="bg-white shadow">
+        <div class="container mx-auto flex items-center justify-between py-4">
+            <a href="#" class="text-xl font-bold text-indigo-600 flex items-center">
+                <span class="ml-0">Placement System</span>
+            </a>
+            <nav class="space-x-4">
+                <a href="{% url 'company-dashboard' %}" class="text-gray-600 hover:no-underline transition duration-300">Dashboard</a>
+                <a href="{% url 'job_retrive' %}" class="text-gray-600 hover:no-underline transition duration-300">Profile</a>
+                <a href="{% url 'jobpost' %}" class="text-gray-600 hover:no-underline transition duration-300">Job Post</a>
+                <a href="{% url 'view' %}" class="text-gray-600 hover:no-underline transition duration-300">view</a>
+                <a href="{% url 'company_logout' %}" class="text-gray-600 hover:no-underline transition duration-300">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container mx-auto py-8 flex-grow">
+        <h1 class="text-3xl font-bold mb-4">Accepted Students</h1>
+        <div class="overflow-x-auto">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Student Name</th>
+                        <th class="px-4 py-2">Email</th>
+                        <th class="px-4 py-2">Position Applied For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through accepted student applications and display each as a row in the table -->
+                    {% for student in accepted_students %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ student.student_name }}</td>
+                        <td class="border px-4 py-2">{{ student.email }}</td>
+                        <td class="border px-4 py-2">{{ student.position }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+       
+        </div>
+     <div class="mt-4">
+    <a href="{% url 'download_excel' %}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Download Excel</a>
+</div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-2 mt-auto">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2023 Placement Management System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
