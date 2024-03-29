@@ -37,7 +37,7 @@ def student_login(request):
                     login(request, user)
                     if hasattr(user, 'student_profile'):
                      request.session['stdid'] = user.student_profile.id
-                     return redirect('joblist')
+                     return redirect('student-dashboard')
                     else:
                         messages.error(request, 'Invalid username or password.')
                 else:
