@@ -3,12 +3,11 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.core.checks import messages
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.urls import reverse
 from django.contrib.auth.hashers import check_password
-from .forms import StudentRegistrationForm, CompanyRegistrationForm, CompanyLoginForm, UserRegistrationForm, JobPostForm
+from .forms import  CompanyLoginForm
 from .forms import StudentLoginForm
 from django.contrib.auth.hashers import make_password
 from .models import Company, JobPost, BasicUser, Student, JobApplication, ApplicationStatus
@@ -37,7 +36,7 @@ def student_login(request):
                     login(request, user)
                     if hasattr(user, 'student_profile'):
                      request.session['stdid'] = user.student_profile.id
-                     return redirect('joblist')
+                     return redirect('student-dashboard')
                     else:
                         messages.error(request, 'Invalid username or password.')
                 else:
@@ -266,6 +265,8 @@ def student_dashboard(request):
 
     return render(request, 'student-dashboard.html', context)
 
+from django.contrib import messages
+
 def apply_job(request, job_id, company, position):
     if request.method == 'POST':
         # Retrieve student data from session or however it's stored
@@ -275,6 +276,7 @@ def apply_job(request, job_id, company, position):
         # Check if the student has already applied for a job posted by the same company
         existing_applications = JobApplication.objects.filter(student=student, company=company)
         if existing_applications.exists():
+            # Set error message
             messages.error(request, 'You have already applied for a job posted by this company.')
             return redirect('joblist')
 
@@ -299,33 +301,65 @@ def job_retrive(request):
     user_id = request.session.get('userid')
     user = Company.objects.get(id=user_id)
     company_name = user.company_name
-    print("Company Name:", company_name)  # Print the company name for
-    all_applications = JobApplication.objects.filter(company=company_name)
-    accepted_applications = ApplicationStatus.objects.filter(status=ApplicationStatus.ACCEPTED).values_list(
-        'application_id', flat=True)
-    rejected_applications = ApplicationStatus.objects.filter(status=ApplicationStatus.REJECTED).values_list(
-        'application_id', flat=True)
-    remaining_applications = all_applications.exclude(id__in=accepted_applications).exclude(
-        id__in=rejected_applications)
 
+    # Get IDs of applications rejected by other companies
+    rejected_by_others = ApplicationStatus.objects.filter(
+        status=ApplicationStatus.REJECTED
+    ).values_list(
+        'application_id', flat=True
+    )
+    print(rejected_by_others)
+    # Get IDs of applications accepted by the current company
+    accepted_by_company = ApplicationStatus.objects.filter(
+        status=ApplicationStatus.ACCEPTED,
+        is_accepted=True  # Filter out already accepted applications
+    ).values_list('application_id', flat=True)
+    print(accepted_by_company)
+    # Get all applications for the current company where students are not accepted by other companies
+    accepted_students = ApplicationStatus.objects.filter(
+        application_id__in=accepted_by_company
+    ).values_list('student_name', flat=True)
+    print(accepted_students)
+    # Get student IDs corresponding to the accepted students
+    accepted_student_ids = Student.objects.filter(
+        student_name__in=accepted_students
+    ).values_list('id', flat=True)
+    print(accepted_student_ids)
+    # Get job applications for the current company excluding accepted students
+    remaining_applications = JobApplication.objects.filter(company=company_name).exclude(student_id__in=accepted_student_ids)
     return render(request, 'job_retrive.html', {'job_applications': remaining_applications})
 
 
+
+@login_required(login_url='company-login')
 def accept_reject_application(request, application_id):
     application = get_object_or_404(JobApplication, id=application_id)
+    company_name = application.company
+    student_name = application.student.student_name
 
     if request.method == 'POST':
         if 'accept' in request.POST:
-            status = ApplicationStatus.objects.create(application=application,
-                                                      company_name=application.company,
-                                                      student_name=application.student.student_name,
-                                                      status=ApplicationStatus.ACCEPTED)
-            print(status)
+            # Check if a status entry already exists for this application and update it
+            status, created = ApplicationStatus.objects.update_or_create(
+                application=application,
+                defaults={'company_name': company_name,
+                          'student_name': student_name,
+                          'status': ApplicationStatus.ACCEPTED}
+            )
+            # Update is_accepted to 1
+            status.is_accepted = True
+            status.save()
         elif 'reject' in request.POST:
-            status = ApplicationStatus.objects.create(application=application,
-                                                      company_name=application.company,
-                                                      student_name=application.student.student_name,
-                                                      status=ApplicationStatus.REJECTED)
+            # Check if a status entry already exists for this application and update it
+            status, created = ApplicationStatus.objects.update_or_create(
+                application=application,
+                defaults={'company_name': company_name,
+                          'student_name': student_name,
+                          'status': ApplicationStatus.REJECTED}
+            )
+            # Update is_accepted to 0
+            status.is_accepted = False
+            status.save()
 
         return redirect('job_retrive')
 
@@ -443,7 +477,7 @@ def about(request):
 
 def stop_job_opening(request, job_post_id):
     job_post = JobPost.objects.get(id=job_post_id)
-    job_post.active = False  # Set the active field to False to stop the job opening
+    job_post.active = False
     job_post.save()
-    return redirect('company-dashboard')  # Redirect back to the company dashboard
+    return redirect('company-dashboard')
 

@@ -123,18 +123,23 @@ class JobApplication(models.Model):
         return f"{self.student.student_name} - {self.company} - {self.position}"
 
 
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 class ApplicationStatus(models.Model):
     ACCEPTED = 'AC'
     REJECTED = 'RE'
+
     STATUS_CHOICES = [
-        (ACCEPTED, 'Accepted'),
-        (REJECTED, 'Rejected'),
+        (ACCEPTED, _('Accepted')),
+        (REJECTED, _('Rejected')),
     ]
+
     application = models.ForeignKey(JobApplication, on_delete=models.CASCADE)
-    company_name = models.CharField(max_length=255)
-    student_name = models.CharField(max_length=255)
+    company_name = models.CharField(max_length=100)
+    student_name = models.CharField(max_length=100)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES)
+    is_accepted = models.BooleanField(default=False)  # New field to mark if the student is accepted
 
     def __str__(self):
-        return f"{self.application.student.student_name} - {self.status}"
-
+        return f"{self.student_name} - {self.status}"
