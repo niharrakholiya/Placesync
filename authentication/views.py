@@ -302,13 +302,13 @@ def job_retrive(request):
     user = Company.objects.get(id=user_id)
     company_name = user.company_name
 
-    # Get IDs of applications rejected by other companies
-    rejected_by_others = ApplicationStatus.objects.filter(
-        status=ApplicationStatus.REJECTED
-    ).values_list(
-        'application_id', flat=True
-    )
-    print(rejected_by_others)
+    # Get application IDs rejected by the current company
+    rejected_by_current_company = ApplicationStatus.objects.filter(
+        status=ApplicationStatus.REJECTED,
+        company_name=company_name
+    ).values_list('application_id', flat=True)
+
+    print(rejected_by_current_company)
     # Get IDs of applications accepted by the current company
     accepted_by_company = ApplicationStatus.objects.filter(
         status=ApplicationStatus.ACCEPTED,
@@ -319,14 +319,21 @@ def job_retrive(request):
     accepted_students = ApplicationStatus.objects.filter(
         application_id__in=accepted_by_company
     ).values_list('student_name', flat=True)
+
+    rejected_students = ApplicationStatus.objects.filter(
+        application_id__in=rejected_by_current_company
+    ).values_list('student_name', flat=True)
     print(accepted_students)
     # Get student IDs corresponding to the accepted students
     accepted_student_ids = Student.objects.filter(
         student_name__in=accepted_students
     ).values_list('id', flat=True)
+    rejected_students_ids = Student.objects.filter(
+        student_name__in=rejected_students
+    ).values_list('id', flat=True)
     print(accepted_student_ids)
     # Get job applications for the current company excluding accepted students
-    remaining_applications = JobApplication.objects.filter(company=company_name).exclude(student_id__in=accepted_student_ids)
+    remaining_applications = JobApplication.objects.filter(company=company_name).exclude(student_id__in=accepted_student_ids).exclude(student_id__in=rejected_students_ids)
     return render(request, 'job_retrive.html', {'job_applications': remaining_applications})
 
 
@@ -344,7 +351,8 @@ def accept_reject_application(request, application_id):
                 application=application,
                 defaults={'company_name': company_name,
                           'student_name': student_name,
-                          'status': ApplicationStatus.ACCEPTED}
+                          'status': ApplicationStatus.ACCEPTED
+                          }
             )
             # Update is_accepted to 1
             status.is_accepted = True
